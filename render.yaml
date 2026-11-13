@@ -1,0 +1,17 @@
+# Blueprint do Render: o Render lê este arquivo sozinho ao conectar o repositório.
+services:
+  - type: web
+    name: fly-ai
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/status
+    autoDeploy: true
+    envVars:
+      # Segredo: o Render pergunta o valor na hora de criar o serviço. NÃO coloque a chave aqui.
+      - key: NVIDIA_API_KEY
+        sync: false
+      # Faz o limite de mensagens contar por visitante, e não pelo IP do proxy do Render.
+      - key: TRUST_PROXY
+        value: "true"
